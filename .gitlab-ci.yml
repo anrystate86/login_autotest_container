@@ -1,0 +1,25 @@
+image: oraclelinux:7-slim
+#stages:
+#  - build
+#  - test
+#Prepare:
+#  stage: build
+#  script:
+    
+
+test:
+#  stage: test
+  script: 
+    - yum install -y wget
+    - wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && rpm -i epel-release-latest-7.noarch.rpm
+    - yum install -y git python3
+    - cd /tmp
+    - git clone https://infra-gitlab.otr.ru/eb-admins/py_ufos_autotest.git
+    - python3 --version
+#    - yum install -y ansible iputils
+#    - ping eb-exp-demo-ufos -c 3
+#    - export ANSIBLE_HOST_KEY_CHECKING=False
+##    - echo "[testhst]" >> tmp
+#    - echo "eb-exp-demo-ufos" >> tmp
+#    - ansible -i tmp testhst -m ping -vvv
+#    - ssh -tt ansible@eb-exp-demo-ufos
