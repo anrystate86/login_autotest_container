@@ -22,6 +22,7 @@ log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(funcName)s(%(line
 chrome_options = Options()                                                                                                 
 chrome_options.add_argument("--ignore-certificate-errors")
 chrome_options.add_argument("--headless")
+chrome_options.add_argument("--remote-debugging-port=9222")
 platform = sys.platform[0]
 if platform == 'w':
     driver = webdriver.Chrome(os.path.dirname(os.path.abspath(__file__)) + '\\chromedriver.exe', options=chrome_options)
