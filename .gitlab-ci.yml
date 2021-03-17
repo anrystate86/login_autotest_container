@@ -14,8 +14,9 @@ test:
     - wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && rpm -i epel-release-latest-7.noarch.rpm
     - yum install -y git python3
     - cd /tmp
-    - git clone https://nazarov.andrey:jfRq18ET@infra-gitlab.otr.ru/eb-admins/py_ufos_autotest.git
-    - python3 --version
+    - git clone https://nazarov.andrey@otr.ru:jfRq18ET@infra-gitlab.otr.ru/eb-admins/py_ufos_autotest.git
+    - cd py_ufos_autotest
+    - python3 ufos_autotest.py
 #    - yum install -y ansible iputils
 #    - ping eb-exp-demo-ufos -c 3
 #    - export ANSIBLE_HOST_KEY_CHECKING=False
