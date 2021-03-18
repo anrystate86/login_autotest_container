@@ -96,3 +96,32 @@ selenium.common.exceptions.TimeoutException: Message:
 2021-03-17 10:50:57,494 INFO exit_url(102) Logoff from Ufos successfuly tested
 2021-03-17 10:50:59,698 INFO return_result(108) Send result{"result": "True", "index_time": 4055, "login_time": 4873, "logoff_time": 2996, "time_final": 11924}
 2021-03-17 10:51:00,005 ERROR return_result(117) Error sending result to Zabbix server, may be need to add CTNB002480 to alowed hosts in jsonresult item of host eb-exp-demo-ufos
+2021-03-18 09:21:10,669 INFO <module>(168) 
+2021-03-18 09:21:10,670 INFO <module>(169) Starting autotest script
+2021-03-18 09:21:10,670 INFO get_config(138) Reading config file config.json
+2021-03-18 09:21:10,674 INFO get_config(138) Reading config file config.json
+2021-03-18 09:21:10,675 INFO <module>(184) Will testing UFOS url http://eb-exp-demo-ufos:8889/sufdclient/index.zul
+2021-03-18 09:21:26,329 INFO open_url(62) Open URL successfuly tested
+2021-03-18 09:21:45,082 INFO login_url(85) Login to Ufos successfuly tested
+2021-03-18 09:21:48,105 INFO exit_url(104) Logoff from Ufos successfuly tested
+2021-03-18 09:21:50,194 INFO return_result(110) Send result{"result": "True", "index_time": 15653, "login_time": 18752, "logoff_time": 3022, "time_final": 37427}
+2021-03-18 09:21:51,055 ERROR return_result(119) Error sending result to Zabbix server, may be need to add CTNB002480 to alowed hosts in jsonresult item of host eb-exp-demo-ufos
+2021-03-18 09:24:51,113 INFO <module>(168) 
+2021-03-18 09:24:51,113 INFO <module>(169) Starting autotest script
+2021-03-18 09:24:51,114 INFO get_config(138) Reading config file config.json
+2021-03-18 09:24:51,117 INFO get_config(138) Reading config file config.json
+2021-03-18 09:24:51,117 INFO <module>(184) Will testing UFOS url http://eb-exp-demo-ufos:8889/sufdclient/index.zul
+2021-03-18 09:24:56,425 INFO open_url(62) Open URL successfuly tested
+2021-03-18 09:25:03,469 INFO login_url(85) Login to Ufos successfuly tested
+2021-03-18 09:25:06,316 INFO exit_url(104) Logoff from Ufos successfuly tested
+2021-03-18 09:25:08,381 INFO return_result(110) Send result{"result": "True", "index_time": 5309, "login_time": 7044, "logoff_time": 2846, "time_final": 15199}
+2021-03-18 09:25:09,215 ERROR return_result(119) Error sending result to Zabbix server, may be need to add CTNB002480 to alowed hosts in jsonresult item of host eb-exp-demo-ufos
+2021-03-18 09:27:11,277 INFO <module>(168) 
+2021-03-18 09:27:11,278 INFO <module>(169) Starting autotest script
+2021-03-18 09:27:11,278 INFO get_config(138) Reading config file config.json
+2021-03-18 09:27:11,280 INFO <module>(184) Will testing UFOS url http://eb-exp-demo-ufos-jetty:18080
+2021-03-18 09:27:16,528 INFO open_url(62) Open URL successfuly tested
+2021-03-18 09:27:18,921 INFO login_url(85) Login to Ufos successfuly tested
+2021-03-18 09:27:22,022 INFO exit_url(104) Logoff from Ufos successfuly tested
+2021-03-18 09:27:24,082 INFO return_result(110) Send result{"result": "True", "index_time": 5249, "login_time": 2393, "logoff_time": 3100, "time_final": 10742}
+2021-03-18 09:27:24,250 INFO return_result(122) Succesfuly sended result to Zabbix server
