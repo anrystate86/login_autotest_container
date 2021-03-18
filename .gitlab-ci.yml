@@ -7,6 +7,7 @@ test:
      - echo $UFOS_SERVER
      - cd /builds/eb-admins/py_ufos_autotest/
      - chmod +x chromedriver
+     - chmod +x zabbix_sender
      - python3 ufos_autotest.py -l $UFOS_USER -p $UFOS_PASSWORD -u $UFOS_SERVER
 #     - yum install -y iputils
 #     - ping vs-c06-zabbix_proxy02.pds.otr.ru
