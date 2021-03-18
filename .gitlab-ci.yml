@@ -1,4 +1,4 @@
-image: oraclelinux:7-slim
+image: ufos_autotest:latest
 #stages:
 #  - build
 #  - test
@@ -10,9 +10,9 @@ image: oraclelinux:7-slim
 test:
 #  stage: test
   script: 
-    - yum install -y wget
-    - wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && rpm -i epel-release-latest-7.noarch.rpm
-    - yum install -y git python3
+#    - yum install -y wget
+#    - wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && rpm -i epel-release-latest-7.noarch.rpm
+#    - yum install -y git python3
     - cd /tmp
     - echo "$SSH_CLONE_KEY" | tr -d '\r' > ~/.ssh/id_rsa && chmod 700 ~/.ssh/id_rsa
     - echo "$KNOWN_HOST" | tr -d '\r' > ~/.ssh/known_hosts
