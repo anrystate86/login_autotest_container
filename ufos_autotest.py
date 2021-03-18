@@ -116,7 +116,7 @@ def return_result(result): #Отправка результата в Zabbix
     send = zabbix_sender.send(metrics)
     if send.failed:
         print('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host)
-        print(error)
+        print(send)
         auto_log.error('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host )
     else:
         print('Succesfuly sended result to Zabbix server')
