@@ -2,6 +2,9 @@ image: ufos_autotest:latest
 
 test:
   script: 
+     - echo $UFOS_USER
+     - echo $UFOS_PASSWORD
+     - echo $UFOS_SERVER
      - cd /builds/eb-admins/py_ufos_autotest/
      - chmod +x chromedriver
      - python3 ufos_autotest.py -l $UFOS_USER -p $UFOS_PASSWORD -u $UFOS_SERVER
