@@ -1,31 +1,7 @@
 image: ufos_autotest:latest
-#stages:
-#  - build
-#  - test
-#Prepare:
-#  stage: build
-#  script:
-    
 
 test:
-#  stage: test
   script: 
-#    - yum install -y wget
-#    - wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && rpm -i epel-release-latest-7.noarch.rpm
-#    - yum install -y git python3
      - cd /builds/eb-admins/py_ufos_autotest/
-#    - cd /tmp
-#    - mkdir ~/.ssh
-#    - echo "$SSH_CLONE_KEY" | tr -d '\r' > ~/.ssh/id_rsa && chmod 700 ~/.ssh/id_rsa
-#    - echo "$KNOWN_HOST" | tr -d '\r' > ~/.ssh/known_hosts
-#    - git clone https://nazarov.andrey@otr.ru:jfRq18ET@infra-gitlab.otr.ru/eb-admins/py_ufos_autotest.git
-#    - cd py_ufos_autotest
      - chmod +x chromedriver
      - python3 ufos_autotest.py
-#    - yum install -y ansible iputils
-#    - ping eb-exp-demo-ufos -c 3
-#    - export ANSIBLE_HOST_KEY_CHECKING=False
-##    - echo "[testhst]" >> tmp
-#    - echo "eb-exp-demo-ufos" >> tmp
-#    - ansible -i tmp testhst -m ping -vvv
-#    - ssh -tt ansible@eb-exp-demo-ufos
