@@ -2,8 +2,8 @@ image: ufos_autotest:latest
 
 test:
   script: 
-     - systemctl stop firewalld
-     - systemctl disable firewalld
+#     - systemctl stop firewalld
+#     - systemctl disable firewalld
      - setenforce 0
      - echo $UFOS_USER
      - echo $UFOS_PASSWORD
