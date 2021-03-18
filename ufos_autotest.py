@@ -115,7 +115,7 @@ def return_result(result): #Отправка результата в Zabbix
     metrics = []
     m = ZabbixMetric(host, "jsonresult", jresult)
     metrics.append(m)
-    os.system("zabbix_sender -v -z " + "vs-c06-zabbix_proxy02.pds.otr.ru" + " -s " + host + " -k " + "jsonresult" + " -o " + jresult)
+    os.system("./zabbix_sender -v -z " + "vs-c06-zabbix_proxy02.pds.otr.ru" + " -s " + host + " -k " + "jsonresult" + " -o " + jresult)
     #send = zabbix_sender.send(metrics)
     #if send.failed:
     #    print('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host)
