@@ -4,4 +4,10 @@ test:
   script: 
      - cd /builds/eb-admins/py_ufos_autotest/
      - chmod +x chromedriver
-     - python3 ufos_autotest.py
+     - python3 ufos_autotest.py -l $UFOS_USER -p $UFOS_PASSWORD -u $UFOS_SERVER
+     
+#'-c', '--config', help='Input Config file name', default='config.json'
+#'-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889'
+#'-l', '--login', help='Input a Login'
+#'-p', '--password', help='Input a Password'
+
