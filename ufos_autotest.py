@@ -118,7 +118,7 @@ def return_result(result): #Отправка результата в Zabbix
     with open('res.txt','w') as f:
         f.write(host + " jsonresult " + jresult)
 
-    os.system("./zabbix_sender -v -z " + "vs-c06-zabbix_proxy02.pds.otr.ru" + " -s " + host + " -i res.txt")
+    os.system("./zabbix_sender -vv -z " + "vs-c06-zabbix_proxy02.pds.otr.ru" + " -s " + host + " -i res.txt")
     os.remove('res.txt')
     #send = zabbix_sender.send(metrics)
     #if send.failed:
