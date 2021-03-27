@@ -1,5 +1,5 @@
 #image: ufos_autotest:latest
-image: infra-gitlab.otr.ru/eb-admins/py_autotest_image:latest
+image: infra-gitlab.otr.ru/eb-admins/py_autotest_image
 
 test:
   script: 
