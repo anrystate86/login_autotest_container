@@ -1,10 +1,9 @@
 #image: ufos_autotest:latest
-image: infra-gitlab.otr.ru/eb-admins/py_autotest_image
-
 before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry-infra-gitlab.otr.ru:5005
 
 test:
+  image: infra-gitlab.otr.ru/eb-admins/py_autotest_image:latest
   script: 
 #     - systemctl stop firewalld
 #     - systemctl disable firewalld
