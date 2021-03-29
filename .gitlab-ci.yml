@@ -1,8 +1,8 @@
 #image: ufos_autotest:latest
-before_script:
-  - docker login -u gitlab-deploy-token-pull -p rjox9fsjAKzMuGKdn_Uf registry-infra-gitlab.otr.ru:5005
+#before_script:
+#  - docker login -u gitlab-deploy-token-pull -p rjox9fsjAKzMuGKdn_Uf registry-infra-gitlab.otr.ru:5005
 
-test:
+build:
   image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
   script: 
      - echo $UFOS_USER
