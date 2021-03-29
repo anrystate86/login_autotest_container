@@ -16,7 +16,6 @@ build_image:
   only:
     - docker
 
-
 run_container:
 #  image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
   stage: deploy
