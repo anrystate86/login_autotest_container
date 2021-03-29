@@ -5,7 +5,8 @@ stages:
   - build
   - deploy
 
-build:
+build_image:
+  stage: build
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry-infra-gitlab.otr.ru:5005
     - chmod +x chromedriver
@@ -16,8 +17,9 @@ build:
     - docker
 
 
-deploy:
+run_container:
 #  image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
+  stage: deploy
   script:
     - docker container run -d --rm --restart yes --name py_ufos_autotest registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
 #     - echo $UFOS_USER
