@@ -13,8 +13,8 @@ build_image:
     - chmod +x zabbix_sender
     - docker build -t registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest .
     - docker push registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest:latest
-  only:
-    - docker
+#  only:
+#    - docker
 
 run_container:
 #  image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
