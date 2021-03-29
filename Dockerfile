@@ -21,4 +21,9 @@ RUN yum install -y wget && \
     http://mirror.centos.org/centos/7/os/x86_64/Packages/vulkan-filesystem-1.1.97.0-1.el7.noarch.rpm \
     http://mirror.centos.org/centos/7/os/x86_64/Packages/vulkan-1.1.97.0-1.el7.x86_64.rpm \
     https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
-    pip3 install urllib3 devcron
+    pip3 install urllib3 devcron && \
+    mkdir /build
+
+COPY . /build/
+#ENTRYPOINT ["/build"]
+CMD ["devcron.py","crontab"]
