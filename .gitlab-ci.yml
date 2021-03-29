@@ -11,8 +11,8 @@ build_image:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry-infra-gitlab.otr.ru:5005
     - chmod +x chromedriver
     - chmod +x zabbix_sender
-    - docker build -t registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image .
-    - docker push registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
+    - docker build -t registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest .
+    - docker push registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest:latest
   only:
     - docker
 
@@ -20,7 +20,7 @@ run_container:
 #  image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
   stage: deploy
   script:
-    - docker container run -d --rm --restart yes --name py_ufos_autotest registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
+    - docker container run -d --rm --restart yes --name py_ufos_autotest registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest:latest
 #     - echo $UFOS_USER
 #     - echo $UFOS_PASSWORD
 #     - echo $UFOS_SERVER
