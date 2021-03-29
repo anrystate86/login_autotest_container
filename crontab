@@ -1,0 +1,1 @@
+*/3 * * * * /build/ufos_autotest.py -c /build/stand_configs/conf_eb-exp-demo-ufos-jetty.json
