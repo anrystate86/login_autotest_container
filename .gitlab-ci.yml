@@ -1,18 +1,33 @@
 #image: ufos_autotest:latest
 #before_script:
 #  - docker login -u gitlab-deploy-token-pull -p rjox9fsjAKzMuGKdn_Uf registry-infra-gitlab.otr.ru:5005
+stages:
+  - build
+  - deploy
 
 build:
-  image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
-  script: 
-     - echo $UFOS_USER
-     - echo $UFOS_PASSWORD
-     - echo $UFOS_SERVER
-     - pwd
-     - cd /builds/eb-admins/py_ufos_autotest/
-     - chmod +x chromedriver
-     - chmod +x zabbix_sender
-     - python3 ufos_autotest.py -c ./stand_configs/conf_eb-exp-demo-ufos-jetty.json
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry-infra-gitlab.otr.ru:5005
+    - chmod +x chromedriver
+    - chmod +x zabbix_sender
+    - docker build -t registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image .
+    - docker push registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
+  only:
+    - docker
+
+
+deploy:
+#  image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
+  script:
+    - docker container run -d --rm --restart yes --name py_ufos_autotest registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
+#     - echo $UFOS_USER
+#     - echo $UFOS_PASSWORD
+#     - echo $UFOS_SERVER
+#     - pwd
+#     - cd /builds/eb-admins/py_ufos_autotest/
+#     - chmod +x chromedriver
+#     - chmod +x zabbix_sender
+#     - python3 ufos_autotest.py -c ./stand_configs/conf_eb-exp-demo-ufos-jetty.json
 #     - python3 ufos_autotest.py -l $UFOS_USER -p $UFOS_PASSWORD -u $UFOS_SERVER
 #     - yum install -y iputils
 #     - ping vs-c06-zabbix_proxy02.pds.otr.ru
