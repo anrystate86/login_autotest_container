@@ -44,6 +44,72 @@ auto_log = logging.getLogger('root')
 auto_log.setLevel(logging.INFO)
 auto_log.addHandler(log_handler)
 
+def return_result(result): #Отправка результата в Zabbix
+    driver.quit()
+    jresult = json.dumps(result)
+    auto_log.info('Send result'+jresult)
+    host = url.hostname
+    print("host:" + host)
+    print("jresult:" + jresult)
+    zabbix_sender = ZabbixSender(zabbix_server='vs-c06-zabbix_proxy02.pds.otr.ru')
+    metrics = []
+    m = ZabbixMetric(host, "jsonresult", jresult)
+    metrics.append(m)
+#    with open('res.txt','w') as f:
+#        f.write(host + " jsonresult " + jresult)
+#    os.system("./zabbix_sender -vv -z " + "vs-c06-zabbix_proxy02.pds.otr.ru" + " -s " + host + " -i res.txt")
+#    os.remove('res.txt')
+    send = zabbix_sender.send(metrics)
+    if send.failed:
+#        print('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host)
+        print('Something went wrong when sending test result for server: ' + host + ', check present item jsonresult for server or wait 1 hour after adding it')
+        print(send)
+#        auto_log.error('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host )
+        auto_log.error('Something went wrong when sending test result for server: ' + host + ', check present item jsonresult for server or wait 1 hour after adding it')
+    else:
+        print('Succesfuly sended result to Zabbix server')
+        auto_log.info('Succesfuly sended result to Zabbix server')
+    print(result)
+    exit()
+
+def mknow(): #Получение текущего времени в микросекундах для Zabbix
+    return int(round(time.time() * 1000))
+
+def get_config(cfile):
+    try:
+        cfile = open(cfile,'r')
+        config = json.loads(cfile.read())
+        cfile.close
+    except Exception as error:
+        print(error)
+        auto_log.warning("Can't read config file config.json, will use starting arguments")
+        return False
+    auto_log.info("Reading config file config.json")
+    return config
+
+def createParser(): #Парсер параметров запуска
+    config = get_config('config.json')
+    if not (config):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str)
+        parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str, default=config['ufos_user'])
+        parser.add_argument('-p', '--password', required=True, help='Input a Password', type=str, default=config['ufos_password'])
+    else:
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-c', '--config', help='Input Config file name') #, default='config.json'
+        parser.add_argument('-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str, default=config['ufos_url'])
+        parser.add_argument('-l', '--login', help='Input a Login', type=str, default=config['ufos_user'])
+        parser.add_argument('-p', '--password', help='Input a Password', type=str, default=config['ufos_password'])
+    
+    args = parser.parse_args()
+    print(args.config)
+    if args.config:
+        config = get_config(args.config)
+    else:
+        config['ufos_url'] = args.url
+        config['ufos_user'] = args.login
+        config['ufos_password'] = args.password
+    return config
 
 def open_url(driver, url, result): #Проверка на открытие индексной страницы
     index_time = mknow()
@@ -104,84 +170,13 @@ def exit_url(driver, result): #Проверка на выход из УФОС
     auto_log.info('Logoff from Ufos successfuly tested')
     return True
 
-def return_result(result): #Отправка результата в Zabbix
-    driver.quit()
-    jresult = json.dumps(result)
-    auto_log.info('Send result'+jresult)
-    host = url.hostname
-    print("host:" + host)
-    print("jresult:" + jresult)
-    zabbix_sender = ZabbixSender(zabbix_server='vs-c06-zabbix_proxy02.pds.otr.ru')
-    metrics = []
-    m = ZabbixMetric(host, "jsonresult", jresult)
-    metrics.append(m)
-    with open('res.txt','w') as f:
-        f.write(host + " jsonresult " + jresult)
-
-    os.system("./zabbix_sender -vv -z " + "vs-c06-zabbix_proxy02.pds.otr.ru" + " -s " + host + " -i res.txt")
-    os.remove('res.txt')
-    #send = zabbix_sender.send(metrics)
-    #if send.failed:
-    #    print('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host)
-    #    print(send)
-    #    auto_log.error('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host )
-    #else:
-    #    print('Succesfuly sended result to Zabbix server')
-    #    auto_log.info('Succesfuly sended result to Zabbix server')
-    print(result)
-    exit()
-
-def mknow(): #Получение текущего времени в микросекундах для Zabbix
-    return int(round(time.time() * 1000))
-
-def get_config(cfile):
-    try:
-        cfile = open(cfile,'r')
-        config = json.loads(cfile.read())
-        cfile.close
-    except Exception as error:
-        print(error)
-        auto_log.warning("Can't read config file config.json, will use starting arguments")
-        return False
-    auto_log.info("Reading config file config.json")
-    return config
-
-def createParser(): #Парсер параметров запуска
-    config = get_config('config.json')
-    if not (config):
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str)
-        parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str, default=config['ufos_user'])
-        parser.add_argument('-p', '--password', required=True, help='Input a Password', type=str, default=config['ufos_password'])
-    else:
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-c', '--config', help='Input Config file name') #, default='config.json'
-        parser.add_argument('-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str, default=config['ufos_url'])
-        parser.add_argument('-l', '--login', help='Input a Login', type=str, default=config['ufos_user'])
-        parser.add_argument('-p', '--password', help='Input a Password', type=str, default=config['ufos_password'])
-    
-    args = parser.parse_args()
-    print(args.config)
-    if args.config:
-        config = get_config(args.config)
-    else:
-        config['ufos_url'] = args.url
-        config['ufos_user'] = args.login
-        config['ufos_password'] = args.password
-
-    return config
-
 if __name__ == "__main__":
     times = {'result':'False', 'index_time':-1, 'login_time':-1, 'logoff_time':-1, 'time_final':-1}
     auto_log.info('')
     auto_log.info('Starting autotest script')
 
-    #parser = createParser()
-    #args = parser.parse_args()
-
     config = createParser()
-    
-    #ufos_url_stend = args.url
+
     ufos_url_stend = config['ufos_url']
     url = urlparse(ufos_url_stend)
     if url.port == 8889:
