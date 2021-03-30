@@ -88,28 +88,29 @@ def get_config(cfile):
     return config
 
 def createParser(): #Парсер параметров запуска
-    config = get_config('config.json')
-#    if not (config):
-#        parser = argparse.ArgumentParser()
-#        parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str)
-#        parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str, default=config['ufos_user'])
-#        parser.add_argument('-p', '--password', required=True, help='Input a Password', type=str, default=config['ufos_password'])
-#    else:
+    config = {'ufos_url':'eb-exp.otr.ru' ,'ufos_user':'wcadmin' , 'ufos_password':'Oracle33'}
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', help='Input Config file name') #, default='config.json'
-    parser.add_argument('-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str, default=config['ufos_url'])
-    parser.add_argument('-l', '--login', help='Input a Login', type=str, default=config['ufos_user'])
-    parser.add_argument('-p', '--password', help='Input a Password', type=str, default=config['ufos_password'])
-    
+    subparsers = parser.add_subparsers(dest='command')
+
+    conf_parser = subparsers.add_parser('conf')
+    conf_parser.add_argument('-c', '--config', help='Input Config file name')
+
+    args_parser = subparsers.add_parser('args')
+    args_parser.add_argument('-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str, default=config['ufos_url'])
+    args_parser.add_argument('-l', '--login', help='Input a Login', type=str, default=config['ufos_user'])
+    args_parser.add_argument('-p', '--password', help='Input a Password', type=str, default=config['ufos_password'])
+
     args = parser.parse_args()
-#    print(args.config)
-    if args.config:
-        config = get_config(args.config)
+    if args.command == 'conf':
+        conf = get_config(args.config)
+    elif args.command == 'args':
+        conf['ufos_url'] = args.url
+        conf['ufos_user'] = args.login
+        conf['ufos_password'] = args.password
     else:
-        config['ufos_url'] = args.url
-        config['ufos_user'] = args.login
-        config['ufos_password'] = args.password
-    return config
+        print('using script ...')
+        exit(1)
+    return conf
 
 def open_url(driver, url, result): #Проверка на открытие индексной страницы
     index_time = mknow()
