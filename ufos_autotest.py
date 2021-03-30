@@ -50,7 +50,7 @@ def return_result(result): #Отправка результата в Zabbix
     auto_log.info('Send result'+jresult)
     host = url.hostname
     print("host:" + host)
-    print("jresult:" + jresult)
+#    print("jresult:" + jresult)
     zabbix_sender = ZabbixSender(zabbix_server='vs-c06-zabbix_proxy02.pds.otr.ru')
     metrics = []
     m = ZabbixMetric(host, "jsonresult", jresult)
