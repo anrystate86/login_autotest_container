@@ -26,4 +26,4 @@ RUN yum install -y wget && \
 
 COPY . /build/
 #ENTRYPOINT ["/build"]
-CMD ["devcron.py","crontab"]
+CMD ["devcron.py","/build/crontab"]
