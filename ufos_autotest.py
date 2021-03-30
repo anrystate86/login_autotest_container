@@ -48,7 +48,7 @@ def return_result(result): #Отправка результата в Zabbix
     driver.quit()
     jresult = json.dumps(result)
     auto_log.info('Send result'+jresult)
-    host = url.hostname
+    host = (url.hostname).replace(".otr.ru","").replace(".pds","")
     print("host:" + host)
 #    print("jresult:" + jresult)
     zabbix_sender = ZabbixSender(zabbix_server='vs-c06-zabbix_proxy02.pds.otr.ru')
