@@ -20,7 +20,7 @@ run_container:
 #  image: registry-infra-gitlab.otr.ru:5005/eb-admins/py_autotest_image:latest
   stage: deploy
   script:
-    - docker container rm py_ufos_autotest
+    - docker container rm -f py_ufos_autotest
     - docker container run -d --restart on-failure --name py_ufos_autotest registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest:latest
 #     - echo $UFOS_USER
 #     - echo $UFOS_PASSWORD
