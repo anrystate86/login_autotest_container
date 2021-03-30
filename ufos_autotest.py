@@ -89,20 +89,20 @@ def get_config(cfile):
 
 def createParser(): #Парсер параметров запуска
     config = get_config('config.json')
-    if not (config):
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str)
-        parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str, default=config['ufos_user'])
-        parser.add_argument('-p', '--password', required=True, help='Input a Password', type=str, default=config['ufos_password'])
-    else:
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-c', '--config', help='Input Config file name') #, default='config.json'
-        parser.add_argument('-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str, default=config['ufos_url'])
-        parser.add_argument('-l', '--login', help='Input a Login', type=str, default=config['ufos_user'])
-        parser.add_argument('-p', '--password', help='Input a Password', type=str, default=config['ufos_password'])
+#    if not (config):
+#        parser = argparse.ArgumentParser()
+#        parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str)
+#        parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str, default=config['ufos_user'])
+#        parser.add_argument('-p', '--password', required=True, help='Input a Password', type=str, default=config['ufos_password'])
+#    else:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--config', help='Input Config file name') #, default='config.json'
+    parser.add_argument('-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str, default=config['ufos_url'])
+    parser.add_argument('-l', '--login', help='Input a Login', type=str, default=config['ufos_user'])
+    parser.add_argument('-p', '--password', help='Input a Password', type=str, default=config['ufos_password'])
     
     args = parser.parse_args()
-    print(args.config)
+#    print(args.config)
     if args.config:
         config = get_config(args.config)
     else:
