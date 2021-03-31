@@ -4,3 +4,4 @@
 */10 * * * * python3 /build/ufos_autotest.py conf -c /build/stand_configs/conf_eb-exp-test-ufos.json
 */10 * * * * python3 /build/ufos_autotest.py conf -c /build/stand_configs/conf_eb-emc-test-ufos-jetty.json
 */10 * * * * python3 /build/ufos_autotest.py conf -c /build/stand_configs/conf_eb-emc-test-ufos.json
+*/10 * * * * python3 /build/ufos_autotest.py conf -c /build/stand_configs/conf_eb-tse-demo-ufos.json
