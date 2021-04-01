@@ -198,4 +198,4 @@ if __name__ == "__main__":
     if not (exit_url(driver, times)):
         return_result(times, config)
  
-    return_result(times)
+    return_result(times, config)
