@@ -6,18 +6,16 @@ build_image:
   stage: build
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry-infra-gitlab.otr.ru:5005
-#    - chmod +x chromedriver
-#    - chmod +x zabbix_sender
     - docker build -t registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest .
     - docker push registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest:latest
+#  only:
+#    - docker
+
 
 run_container:
   stage: deploy
   script:
     - docker container rm -f py_ufos_autotest
     - docker container run -d --restart on-failure --name py_ufos_autotest registry-infra-gitlab.otr.ru:5005/eb-admins/py_ufos_autotest:latest
-#'-c', '--config', help='Input Config file name', default='config.json'
-#'-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889'
-#'-l', '--login', help='Input a Login'
-#'-p', '--password', help='Input a Password'
-
+#  only:
+#    - docker

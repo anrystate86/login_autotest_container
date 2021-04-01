@@ -44,14 +44,15 @@ auto_log = logging.getLogger('root')
 auto_log.setLevel(logging.INFO)
 auto_log.addHandler(log_handler)
 
-def return_result(result): #Отправка результата в Zabbix
+def return_result(result, conf): #Отправка результата в Zabbix
     driver.quit()
     jresult = json.dumps(result)
     auto_log.info('Send result'+jresult)
     host = (url.hostname).replace(".otr.ru","").replace(".pds","")
     print("host:" + host)
 #    print("jresult:" + jresult)
-    zabbix_sender = ZabbixSender(zabbix_server='vs-c06-zabbix_proxy02.pds.otr.ru')
+#    zabbix_sender = ZabbixSender(zabbix_server='vs-c06-zabbix_proxy02.pds.otr.ru')
+    zabbix_sender = ZabbixSender(zabbix_server=conf['zabbix_server'])
     metrics = []
     m = ZabbixMetric(host, "jsonresult", jresult)
     metrics.append(m)
@@ -88,7 +89,7 @@ def get_config(cfile):
     return config
 
 def createParser(): #Парсер параметров запуска
-    config = {'ufos_url':'eb-exp.otr.ru' ,'ufos_user':'wcadmin' , 'ufos_password':'Oracle33'}
+    config = {'ufos_url':'eb-exp.otr.ru' ,'ufos_user':'wcadmin' , 'ufos_password':'Oracle33', 'zabbix_server':'vs-c06-zabbix_proxy02.pds.otr.ru'}
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command')
 
@@ -96,9 +97,11 @@ def createParser(): #Парсер параметров запуска
     conf_parser.add_argument('-c', '--config', help='Input Config file name')
 
     args_parser = subparsers.add_parser('args')
-    args_parser.add_argument('-u', '--url', help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str, default=config['ufos_url'])
-    args_parser.add_argument('-l', '--login', help='Input a Login', type=str, default=config['ufos_user'])
-    args_parser.add_argument('-p', '--password', help='Input a Password', type=str, default=config['ufos_password'])
+    args_parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str) #, default=config['ufos_url'])
+    args_parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str) #, default=config['ufos_user'])
+    args_parser.add_argument('-p', '--password', required=True, help='Input a Password') #, type=str, default=config['ufos_password'])
+    args_parser.add_argument('-z', '--zabbix', help='Input a Zabbix proxy server', type=str, default=config['zabbix_server'])
+
 
     args = parser.parse_args()
     if args.command == 'conf':
@@ -107,6 +110,7 @@ def createParser(): #Парсер параметров запуска
         conf['ufos_url'] = args.url
         conf['ufos_user'] = args.login
         conf['ufos_password'] = args.password
+        conf['zabbix_server'] = args.zabbix
     else:
         print('using script ...')
         exit(1)
@@ -133,10 +137,8 @@ def login_url(driver, result): #Проверка на логин в УФОС
     login_time = mknow()
     try:
         driver.find_element(By.ID,"user").click()
-        #driver.find_element(By.ID, "user").send_keys(args.login)
         driver.find_element(By.ID, "user").send_keys(config['ufos_user'])
         driver.find_element(By.ID, "psw").click()
-        #driver.find_element(By.ID, "psw").send_keys(args.password)
         driver.find_element(By.ID, "psw").send_keys(config['ufos_password'])
         driver.find_element(By.ID, "okButton").click()
         wait = WebDriverWait(driver, 120)
@@ -188,12 +190,12 @@ if __name__ == "__main__":
     auto_log.info('Will testing UFOS url ' + ufos_url)
 
     if not (open_url(driver, ufos_url, times)):
-        return_result(times)
+        return_result(times, config)
     
     if not (login_url(driver, times)):
-        return_result(times)
+        return_result(times, config)
 
     if not (exit_url(driver, times)):
-        return_result(times)
+        return_result(times, config)
  
     return_result(times)

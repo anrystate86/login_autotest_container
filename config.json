@@ -1,6 +1,0 @@
-{
-    "zabbix_server": "vs-c06-zabbix_proxy02.pds.otr.ru",
-    "ufos_url": "http://eb-exp-demo-ufos:8889/",
-    "ufos_user": "wcadmin",
-    "ufos_password": ""
-}
