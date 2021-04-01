@@ -27,6 +27,8 @@ RUN yum install -y wget && \
 COPY . /build/
 
 RUN chmod +x /build/ufos_autotest.py && \
-    chmod +x /build/chromedriver
+    chmod +x /build/chromedriver && \
+    cd /build && \
+    python3 crontab_make.py
 #ENTRYPOINT ["/build"]
 CMD ["devcron.py","/build/crontab"]
