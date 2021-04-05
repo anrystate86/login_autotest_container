@@ -8,7 +8,7 @@ def is_json(myjson):
     return False
   return True
 
-def checkit(file): #Проверка наличия параметров в файле конфигурации УФОС
+def checkit(file): #Проверка наличия параметров в файле конфигурации
     f = open('./stand_configs/'+file, 'r')
     conf = f.read()
     f.close()
