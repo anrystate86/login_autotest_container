@@ -51,21 +51,15 @@ def return_result(result, conf): #Отправка результата в Zabbi
     host = (url.hostname).replace(".otr.ru","").replace(".pds","")
     print("host:" + host)
 #    print("jresult:" + jresult)
-#    zabbix_sender = ZabbixSender(zabbix_server='vs-c06-zabbix_proxy02.pds.otr.ru')
+#    zabbix_sender = ZabbixSender(zabbix_server='zabbix_proxy02')
     zabbix_sender = ZabbixSender(zabbix_server=conf['zabbix_server'])
     metrics = []
     m = ZabbixMetric(host, "jsonresult", jresult)
     metrics.append(m)
-#    with open('res.txt','w') as f:
-#        f.write(host + " jsonresult " + jresult)
-#    os.system("./zabbix_sender -vv -z " + "vs-c06-zabbix_proxy02.pds.otr.ru" + " -s " + host + " -i res.txt")
-#    os.remove('res.txt')
     send = zabbix_sender.send(metrics)
     if send.failed:
-#        print('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host)
         print('Something went wrong when sending test result for server: ' + host + ', check present item jsonresult for server or wait 1 hour after adding it')
         print(send)
-#        auto_log.error('Error sending result to Zabbix server, may be need to add ' + socket.gethostname().replace('.pds','').replace('.otr.ru','') + ' to alowed hosts in jsonresult item of host ' + host )
         auto_log.error('Something went wrong when sending test result for server: ' + host + ', check present item jsonresult for server or wait 1 hour after adding it')
     else:
         print('Succesfuly sended result to Zabbix server')
@@ -89,7 +83,7 @@ def get_config(cfile):
     return config
 
 def createParser(): #Парсер параметров запуска
-    config = {'ufos_url':'eb-exp.otr.ru' ,'ufos_user':'wcadmin' , 'ufos_password':'Oracle33', 'zabbix_server':'vs-c06-zabbix_proxy02.pds.otr.ru'}
+    config = {'ufos_url':'host1' ,'ufos_user':'user' , 'ufos_password':'pass', 'zabbix_server':'zabbix_proxy02'}
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command')
 
@@ -97,9 +91,9 @@ def createParser(): #Парсер параметров запуска
     conf_parser.add_argument('-c', '--config', help='Input Config file name')
 
     args_parser = subparsers.add_parser('args')
-    args_parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test.otr.ru:8889', type=str) #, default=config['ufos_url'])
-    args_parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str) #, default=config['ufos_user'])
-    args_parser.add_argument('-p', '--password', required=True, help='Input a Password') #, type=str, default=config['ufos_password'])
+    args_parser.add_argument('-u', '--url', required=True, help='Input a stand URL with a port. Example http://stand-test:8889', type=str) 
+    args_parser.add_argument('-l', '--login', required=True, help='Input a Login', type=str) 
+    args_parser.add_argument('-p', '--password', required=True, help='Input a Password') 
     args_parser.add_argument('-z', '--zabbix', help='Input a Zabbix proxy server', type=str, default=config['zabbix_server'])
 
 
@@ -133,7 +127,7 @@ def open_url(driver, url, result): #Проверка на открытие ин�
     auto_log.info('Open URL successfuly tested')
     return True
 
-def login_url(driver, result): #Проверка на логин в УФОС
+def login_url(driver, result): #Проверка на логин в 
     login_time = mknow()
     try:
         driver.find_element(By.ID,"user").click()
@@ -154,7 +148,7 @@ def login_url(driver, result): #Проверка на логин в УФОС
     auto_log.info('Login to Ufos successfuly tested')
     return True
 
-def exit_url(driver, result): #Проверка на выход из УФОС
+def exit_url(driver, result): #Проверка на выход из
     logoff_time = mknow()
     try:
         wait = WebDriverWait(driver, 120)
@@ -183,11 +177,11 @@ if __name__ == "__main__":
     ufos_url_stend = config['ufos_url']
     url = urlparse(ufos_url_stend)
     if url.port == 8889:
-        ufos_url = "http://" + url.netloc + "/sufdclient/index.zul"
+        ufos_url = "http://" + url.netloc + "/index.html"
     else:
         ufos_url = "http://" + url.netloc
     
-    auto_log.info('Will testing UFOS url ' + ufos_url)
+    auto_log.info('Will testing url ' + ufos_url)
 
     if not (open_url(driver, ufos_url, times)):
         return_result(times, config)
