@@ -1,6 +1,0 @@
-{
-    "zabbix_server": "vs-c06-zabbix_proxy02.pds.otr.ru",
-    "ufos_url": "http://eb-emc-test-ufos-jetty:18050/",
-    "ufos_user": "123",
-    "ufos_password": "1"
-}
