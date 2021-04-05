@@ -67,5 +67,6 @@ registry-gitlab:5005/admins/py_ufos_autotest
 После сборки производится запуск контейнера, на текущий момент на сервере host-ansible с командой:
 docker container run -d --restart on-failure --name py_ufos_autotest registry-gitlab:5005/admins/py_ufos_autotest:latest
 
-Для проверка логов работы контейнера со скриптом на docker-хосте:
+Для проверка логов работы контейнера со скриптом на docker-хосте :
 docker container logs py_ufos_autotest
+
