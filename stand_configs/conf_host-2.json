@@ -1,0 +1,6 @@
+{
+    "zabbix_server": "zabbix_proxy02",
+    "ufos_url": "http://host-2:18080/",
+    "ufos_user": "123",
+    "ufos_password": "1"
+}
